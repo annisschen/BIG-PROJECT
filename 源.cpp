@@ -8,4 +8,5 @@ int main()
 	noecho();
 	curs_set(FALSE);
 	welcome();
+
 }

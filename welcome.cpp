@@ -99,22 +99,181 @@ void about() {
 	clear();
 	char* ABOUT;
 	ABOUT = "This is a logical game";
-	mvprintw(LINES / 2, COLS / 2 - strlen(ABOUT), ABOUT);
+	mvprintw(LINES / 2 - 8, (COLS - strlen(ABOUT))/ 2 , ABOUT);
 	attron(A_BOLD);
-	mvprintw(LINES-1 , COLS - strlen("return"), "return");
+	mvprintw(LINES / 2 - 6, (COLS - strlen("game rules")) / 2, "game rules");
 	attroff(A_BOLD);
+	mvprintw(LINES / 2 - 4, COLS / 2 - 36, "1.Player is * .");
+	mvprintw(LINES / 2 - 3, COLS / 2 - 36, "2.Entrance is \\ .");
+	mvprintw(LINES / 2 - 2, COLS / 2 - 36, "3.There are four exits which are / .");
+	mvprintw(LINES / 2 - 1, COLS / 2 - 36, "4.There are four keys which contain information about each exit.");
+	mvprintw(LINES / 2 - 0, COLS / 2 - 36, "5.The level of each gate is different.");
+	mvprintw(LINES / 2 - 0, COLS / 2 - 36, "6.You can use the keyboard up and down to control the shift of the characters.");
 
-	refresh();
+
+
+	int ch;
 	cbreak();
 	noecho();
-
 	intrflush(stdscr, false);
 	keypad(stdscr, true);
+	
+	bool return_on = true;
+
+	attron(A_BOLD);
+	mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
+	attroff(A_BOLD);
+	mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
+
+
 	while (1) {
-		int ch = getch();
-		if (ch == 10) {
-			welcome();
+		ch = getch();
+		switch (ch)
+		{
+		case KEY_UP:
+			if (return_on) {
+				attron(A_BOLD);
+				mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
+				attroff(A_BOLD);
+				mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
+				refresh();
+				return_on = false;
+			}
+			else {
+				
+				mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
+				attron(A_BOLD);
+				mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
+				attroff(A_BOLD);
+				refresh();
+				return_on = true;
+			}
+			break;
+		case KEY_DOWN:
+			if (return_on) {
+				attron(A_BOLD);
+				mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
+				attroff(A_BOLD);
+				mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
+				refresh();
+				return_on = false;
+			}
+			else {
+
+				mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
+				attron(A_BOLD);
+				mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
+				attroff(A_BOLD);
+				refresh();
+				return_on = true;
+			}
+			break;
+		case 10:
+			if (return_on) {
+				welcome();
+			}
+			else {
+				clear();
+// 				mvprintw(1, COLS / 2 - strlen("This is a progam which can solve Sudoku.Please enter your Sudoku below."), "This is a progam which can solve Sudoku.Please enter your Sudoku below.");
+// 				mvprintw(2, COLS / 2 - strlen("0 take the place of space"), "0 take the place of space");
+				refresh();
+				mykeyprogram();
+				while (1)
+				{
+					ch = getch();
+					if (ch == 10) {
+						welcome();
+					}
+				}
+			}
+			break;
+		default:
+			break;
 		}
+		
+
 	}
 
+}
+
+ int g[16][16];
+void mykeyprogram() {
+	endwin();
+	move(0, 0);
+	cout << "please enter the Sudoku" << endl;
+	for (int i = 1; i <= 9; ++i)
+		for (int j = 1; j <= 9; ++j)
+			std::cin >> g[i][j];
+
+	std::cout << std::endl;
+	if (Solve())
+		for (int i = 1; i <= 9; ++i)
+			for (int j = 1; j <= 9; ++j)
+				std::cout << g[i][j] << " \n"[j == 9];
+	return ;
+}
+
+
+
+inline void GetABlank(int &x, int &y)
+{
+	x = y = -1;
+	for (int i = 1; i <= 9; ++i)
+		for (int j = 1; j <= 9; ++j)
+			if (g[i][j] == 0)
+			{
+				x = i, y = j;
+				break;
+			}
+}
+inline bool CheckRow(int x, int value)
+{
+	for (int i = 1; i <= 9; ++i)
+		if (g[x][i] == value)
+			return false;
+	return true;
+}
+inline bool CheckCol(int y, int value)
+{
+	for (int i = 1; i <= 9; ++i)
+		if (g[i][y] == value)
+			return false;
+	return true;
+}
+inline bool CheckSmall(int x, int y, int value)
+{
+	int xs = (x - 1) / 3 * 3 + 1;
+	int xt = ((x - 1) / 3 + 1) * 3;
+	int ys = (y - 1) / 3 * 3 + 1;
+	int yt = ((y - 1) / 3 + 1) * 3;
+	for (int i = xs; i <= xt; ++i)
+		for (int j = ys; j <= yt; ++j)
+			if (g[i][j] == value)
+				return false;
+	return true;
+}
+inline bool CheckAll(int x, int y, int value)
+{
+	return CheckRow(x, value)
+		&& CheckCol(y, value)
+		&& CheckSmall(x, y, value);
+}
+bool Solve(void)
+{
+	int i, j;
+	GetABlank(i, j);
+	if (i == -1 && j == -1)
+		return true;
+	for (int k = 1; k <= 9; ++k)
+	{
+		if (CheckAll(i, j, k))
+		{
+			g[i][j] = k;
+			if (!Solve())
+				g[i][j] = 0;
+			else
+				return true;
+		}
+	}
+	return false;
 }

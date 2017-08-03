@@ -5,49 +5,21 @@ using namespace std;
 #include "game.h"
 #include <curses.h>
 #include <windows.h>
-
-
-//****************************************开始游戏**********************************
-//1.人物是 * 
-//2.开始的门是 / 
-//3.结束的门是 \ 
-//4.钥匙是 1 ，2，3，4 
-//5.题目来自于 数独 
-//6.每一个门对应一个题目，有难度区分
-
-
-
 void game()
 {
 	initscr();
 	int level;
 	level = 1;
-
-	//退出游戏的判断
-	
 	bool end_game = false;
-	
-	//初始化一个和map信息有关的数组，来存放信息
-
 	int map_information[4];
-
-	//初始化一个数组来存放map
-
 	vector<string> map;
-	
-	//游戏判断
-
 	while (!end_game)
 	{
 		initscr();
 		//signal(level);
 		clear();
 		refresh();
-
-		//这是一个读取map地图的数组
-
 		char* map_name;
-		
 		switch (level)
 		{
 		case 1:
@@ -160,29 +132,21 @@ void game()
 				switch (ch)
 				{
 				case KEY_UP:
-
 					direction[0] = UP[0];
 					direction[1] = UP[1];
 					break;
-
 				case KEY_DOWN:
-
 					direction[0] = DOWN[0];
 					direction[1] = DOWN[1];
 					break;
-
 				case KEY_LEFT:
-
 					direction[0] = LEFT[0];
 					direction[1] = LEFT[1];
 					break;
-
 				case KEY_RIGHT:
-
 					direction[0] = RIGHT[0];
 					direction[1] = RIGHT[1];
 					break;
-
 				default:
 					break;
 				}
@@ -216,12 +180,14 @@ void game()
 				};
 			}
 
+
+
+
+
 		}
 		return;
 	}
 }
-
-
 
 void show_map(int map_information[4], vector<string> map) {
 
@@ -250,8 +216,6 @@ void show_map(int map_information[4], vector<string> map) {
 	refresh();
 }
 
-
-
 void endgame() {
 	initscr();
 	clear();
@@ -275,8 +239,6 @@ void endgame() {
 	
 }
 
-
-
 void showkey1() {
 	initscr();
 	clear();
@@ -296,8 +258,6 @@ void showkey1() {
 		}
 	}
 }
-
-
 void showkey2() {
 	initscr();
 	clear();
@@ -317,8 +277,6 @@ void showkey2() {
 		}
 	}
 }
-
-
 void showkey3() {
 	initscr();
 	clear();
@@ -339,9 +297,6 @@ void showkey3() {
 	}
 	
 }
-
-
-
 void showkey4() {
 	initscr();
 	clear();
@@ -362,8 +317,6 @@ void showkey4() {
 	}
 }
 
-
-
 void gate(int x,int y,int width,int height) {
 	if (x == 0 ) {//上
 		shudu(3);
@@ -379,7 +332,6 @@ void gate(int x,int y,int width,int height) {
 		shudu(4);
 	}
 }
-
 
 void shudu(int level) {
 	string shudu_name;
@@ -440,8 +392,6 @@ void show_shudu(string shudu_name,int level) {
 	sovle_shudu(shudu_name,shudu,level);
 }
 
-
-
 void sovle_shudu(string shudu_name,vector<string>shudu,int level) {
 	int x = 1;
 	int y = 2;
@@ -455,110 +405,86 @@ void sovle_shudu(string shudu_name,vector<string>shudu,int level) {
 		switch (ch)
 		{
 		case KEY_UP:
-
 			if (x - 2 > 0) {
 				x = x - 2;
 				y = y;
 			}
 			break;
-
 		case KEY_DOWN:
-
 			if (x + 2 < 18) {
 				x = x + 2;
 				y = y;
 			}
 			break;
-
 		case KEY_LEFT:
-
 			if (y - 4 > 0) {
 				x = x;
 				y = y - 4;
 			}
 			break;
-
 		case KEY_RIGHT:
-
 			if (y + 4 < 36) {
 				x = x;
 				y = y + 4;
 			}
 			break;
-
 		case '1':
 			printw("1");
 			
 			shudu[x][y] = '1';
 			break;
-
 		case '2':
 			printw("2");
 			
 			shudu[x][y] = '2';
 			break;
-
 		case '3':
 			printw("3");
 			
 			shudu[x][y] = '3';
 			break;
-
 		case '4':
 			printw("4");
 			
 			shudu[x][y] = '4';
 			break;
-
 		case '5':
 			printw("5");
 		
 			shudu[x][y] = '5';
 			break;
-
 		case '6':
 			printw("6");
 			
 			shudu[x][y] = '6';
 			break;
-
 		case '7':
-
 			printw("7");
 		
 			shudu[x][y] = '7';
 			break;
-
 		case '8':
-
 			printw("8");
 			
 			shudu[x][y] = '8';
 			break;
-
 		case '9':
-
 			printw("9");
 			shudu[x][y] = '9';
 			break;
-
 		case 10:
-
 			if (compare(shudu, level)) {
 				vectory();
 			}
 			else {
 				endgame();
 			}
-
 		default:
 			x = x;
 			y = y;
 			break;
 		}
-
 		move(x, y);
-
 		refresh();
 	}
 }
@@ -638,14 +564,11 @@ void vectory() {
 	initscr();
 	clear();
 	refresh();
-
 	mvprintw(LINES / 2, (COLS - strlen("VECTORY")) / 2, "VECTORY");
-
 	attron(A_BOLD);
 	mvprintw(LINES - 1, (COLS - strlen("return")), "return");
 	attroff(A_BOLD);
 	refresh();
-
 	while (1) {
 		char ch;
 		ch = getch();
