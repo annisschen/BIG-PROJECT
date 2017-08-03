@@ -13,6 +13,6 @@
 // #define RIGHT {0,1}	
 void game();
 
-void show_map(int[4] , char**);
+void show_map(int[4] , vector<string>);
 
-void end();
+void endgame();
