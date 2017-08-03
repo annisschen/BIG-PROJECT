@@ -7,9 +7,9 @@ void welcome()
 	clear();
 	char *hello = "Do you have logic?";
 
-	initscr();
-	noecho();
-	curs_set(FALSE);
+// 	initscr();
+// 	noecho();
+// 	curs_set(FALSE);
 	bool startbutton_on;
 
 	attron(A_BLINK);
@@ -88,6 +88,7 @@ void welcome()
 			break;
 		}
 	}
+
 	endwin();
 	return;
 }

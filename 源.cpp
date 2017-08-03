@@ -4,5 +4,8 @@
 
 int main()
 {
+	initscr();
+	noecho();
+	curs_set(FALSE);
 	welcome();
 }
