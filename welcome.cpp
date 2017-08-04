@@ -174,8 +174,7 @@ void about() {
 			}
 			else {
 				clear();
-// 				mvprintw(1, COLS / 2 - strlen("This is a progam which can solve Sudoku.Please enter your Sudoku below."), "This is a progam which can solve Sudoku.Please enter your Sudoku below.");
-// 				mvprintw(2, COLS / 2 - strlen("0 take the place of space"), "0 take the place of space");
+
 				refresh();
 				mykeyprogram();
 				while (1)
@@ -198,8 +197,15 @@ void about() {
 
  int g[16][16];
 void mykeyprogram() {
+	initscr();
+	clear();
+	mvprintw(5, COLS / 2 - strlen("This is a progam which can solve Sudoku.Please enter your Sudoku below."), "This is a progam which can solve Sudoku.Please enter your Sudoku below.");
+	mvprintw(6, COLS / 2 - strlen("0 take the place of space"), "0 take the place of space");
+	mvprintw(20, COLS / 2 - strlen("enter your Sudoku below"), "enter your Sudoku below");
+	refresh();
+
 	endwin();
-	move(0, 0);
+
 	cout << "please enter the Sudoku" << endl;
 	for (int i = 1; i <= 9; ++i)
 		for (int j = 1; j <= 9; ++j)
@@ -226,6 +232,8 @@ inline void GetABlank(int &x, int &y)
 				break;
 			}
 }
+
+
 inline bool CheckRow(int x, int value)
 {
 	for (int i = 1; i <= 9; ++i)
@@ -233,6 +241,8 @@ inline bool CheckRow(int x, int value)
 			return false;
 	return true;
 }
+
+
 inline bool CheckCol(int y, int value)
 {
 	for (int i = 1; i <= 9; ++i)
@@ -240,6 +250,8 @@ inline bool CheckCol(int y, int value)
 			return false;
 	return true;
 }
+
+
 inline bool CheckSmall(int x, int y, int value)
 {
 	int xs = (x - 1) / 3 * 3 + 1;
@@ -252,12 +264,16 @@ inline bool CheckSmall(int x, int y, int value)
 				return false;
 	return true;
 }
+
+
 inline bool CheckAll(int x, int y, int value)
 {
 	return CheckRow(x, value)
 		&& CheckCol(y, value)
 		&& CheckSmall(x, y, value);
 }
+
+
 bool Solve(void)
 {
 	int i, j;

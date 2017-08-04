@@ -387,21 +387,29 @@ void shudu(int level) {
 	switch (level)
 	{
 	case 1:
+
 		shudu_name = "shudu1.txt";
 		show_shudu(shudu_name,level);
 		break;
+
 	case 2:
+
 		shudu_name = "shudu2.txt";
 		show_shudu(shudu_name, level);
 		break;
+
 	case 3:
+
 		shudu_name = "shudu3.txt";
 		show_shudu(shudu_name, level);
 		break;
+
 	case 4:
+
 		shudu_name = "shudu4.txt";
 		show_shudu(shudu_name, level);
 		break;
+
 	default:
 		break;
 	}
@@ -409,11 +417,16 @@ void shudu(int level) {
 
 
 void show_shudu(string shudu_name,int level) {
+
 	initscr();
 	clear();
+
 	ifstream in(shudu_name);
+
 	vector< string> shudu;
+
 	shudu.resize(19);
+
 	for (int i = 0; i < 19; ++i) {
 		for (int j = 0; j < 37; ++j)
 		{
