@@ -446,8 +446,11 @@ void show_shudu(string shudu_name,int level) {
 	for (int i = 0; i < 19; ++i) {
 		char* line;
 		line = new char[37];
+		
 		strcpy(line, shudu[i].c_str());
+		attron(A_BOLD);
 		mvprintw(0 + i, 0, line);
+		attroff(A_BOLD);
 	}
 	refresh();
 	sovle_shudu(shudu_name,shudu,level);

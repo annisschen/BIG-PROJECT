@@ -12,12 +12,12 @@ void welcome()
 // 	curs_set(FALSE);
 	bool startbutton_on;
 
-	attron(A_BLINK);
-	mvprintw(LINES / 2 - 4, COLS / 2 - strlen(hello) / 2, "%s", hello);
-	attroff(A_BLINK);
 	attron(A_BOLD);
-	mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
+	mvprintw(LINES / 2 - 4, COLS / 2 - strlen(hello) / 2, "%s", hello);
 	attroff(A_BOLD);
+	attron(A_REVERSE);
+	mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
+	attroff(A_REVERSE);
 	mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
 	refresh();
 	startbutton_on = true;
@@ -35,9 +35,9 @@ void welcome()
 		{
 		case KEY_UP:
 			if (startbutton_on) {
-				attron(A_BOLD);
+				attron(A_REVERSE);
 				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
-				attroff(A_BOLD);
+				attroff(A_REVERSE);
 				attron(A_NORMAL);
 				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
 				attroff(A_NORMAL);
@@ -45,9 +45,9 @@ void welcome()
 				startbutton_on = false;
 			}
 			else {
-				attron(A_BOLD);
+				attron(A_REVERSE);
 				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
-				attroff(A_BOLD);
+				attroff(A_REVERSE);
 				attron(A_NORMAL);
 				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
 				attroff(A_NORMAL);
@@ -57,9 +57,9 @@ void welcome()
 			break;
 		case KEY_DOWN:
 			if (startbutton_on) {
-				attron(A_BOLD);
+				attron(A_REVERSE);
 				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
-				attroff(A_BOLD);
+				attroff(A_REVERSE);
 				attron(A_NORMAL);
 				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
 				attroff(A_NORMAL);
@@ -67,9 +67,9 @@ void welcome()
 				startbutton_on = false;
 			}
 			else {
-				attron(A_BOLD);
+				attron(A_REVERSE);
 				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
-				attroff(A_BOLD);
+				attroff(A_REVERSE);
 				attron(A_NORMAL);
 				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
 				attroff(A_NORMAL);
@@ -199,7 +199,7 @@ void about() {
 void mykeyprogram() {
 	initscr();
 	clear();
-	mvprintw(5, COLS / 2 - strlen("This is a progam which can solve Sudoku.Please enter your Sudoku below."), "This is a progam which can solve Sudoku.Please enter your Sudoku below.");
+	mvprintw(5, COLS / 2 - strlen("This is a program which can solve Sudoku.Please enter your Sudoku below."), "This is a progam which can solve Sudoku.Please enter your Sudoku below.");
 	mvprintw(6, COLS / 2 - strlen("0 take the place of space"), "0 take the place of space");
 	mvprintw(20, COLS / 2 - strlen("enter your Sudoku below"), "enter your Sudoku below");
 	refresh();
