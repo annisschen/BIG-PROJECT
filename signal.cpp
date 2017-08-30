@@ -15,11 +15,22 @@ void signal(int level)
 		move(LINES / 2, (COLS - strlen("level 2")) / 2);            /*move the cursor to the center*/
 		waddstr(stdscr, "Level 2");
 		refresh();
+		Sleep(1000);
+		
 		break;
 	case 3:
 		move(LINES / 2, (COLS - strlen("level 3")) / 2);            /*move the cursor to the center*/
 		waddstr(stdscr, "Level 3");
 		refresh();
+		Sleep(1000);
+		
+		break;
+	case 4:
+		move(LINES / 2, (COLS - strlen("level 4")) / 2);            /*move the cursor to the center*/
+		waddstr(stdscr, "Level 4");
+		refresh();
+		Sleep(1000);
+	
 		break;
 	default:
 		break;

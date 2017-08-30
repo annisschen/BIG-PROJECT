@@ -65,22 +65,29 @@ void game()
 
 		ifstream in(map_name);
 
+		//只要文件读取成功就开始游戏了
+
 		while (!in.bad())
 		{
 
 			int width, height;
+			//width是地图的宽，height是高
+			//我的地图显示是先横后竖
+			//所以以后的循环都是height先，width后
 
 			in >> width;
 			in >> height;
 
 			in.ignore();
+			//省略掉换行符
 
 			map_information[0] = width;
 			map_information[1] = height;
-
+			//存储这两个信息，以便传给game
 
 			map.resize(height);
-			for (int i = 0; i < height; ++i) {
+			for (int i = 0; i < height; ++i) 
+			{
 				for (int j = 0; j < width; ++j)
 				{
 					char a;
@@ -102,7 +109,8 @@ void game()
 
 
 			int info = 2;
-			for (int i = 0; i < height; ++i) {
+			for (int i = 0; i < height; ++i) 
+			{
 				string a;
 				a = map[i];
 				for (int j = 0; j < width; ++j)
@@ -116,6 +124,10 @@ void game()
 			}
 
 			//game start
+
+			//因为伴随着的是x，y两个方向上的变化，所以设定了UP,DOWN,LEFT,RIGHT
+			//0号元素是x，1号元素是y
+
 			int UP[2];
 			UP[0] = -1;
 			UP[1] = 0;
@@ -146,7 +158,8 @@ void game()
 
 			//cout << KEY_UP << "  " << KEY_DOWN << "  " << KEY_LEFT << "  " << KEY_RIGHT;
 
-			while (!end_game) {
+			while (!end_game) 
+			{
 
 				(map[x])[y] = '*';
 
@@ -160,29 +173,21 @@ void game()
 				switch (ch)
 				{
 				case KEY_UP:
-
 					direction[0] = UP[0];
 					direction[1] = UP[1];
 					break;
-
 				case KEY_DOWN:
-
 					direction[0] = DOWN[0];
 					direction[1] = DOWN[1];
 					break;
-
 				case KEY_LEFT:
-
 					direction[0] = LEFT[0];
 					direction[1] = LEFT[1];
 					break;
-
 				case KEY_RIGHT:
-
 					direction[0] = RIGHT[0];
 					direction[1] = RIGHT[1];
 					break;
-
 				default:
 					break;
 				}
@@ -223,7 +228,10 @@ void game()
 
 
 
-void show_map(int map_information[4], vector<string> map) {
+
+
+void show_map(int map_information[4], vector<string> map) 
+{
 
 	clear();
 	refresh();
@@ -233,15 +241,19 @@ void show_map(int map_information[4], vector<string> map) {
 	height = map_information[1];
 
 
-	for (int i = 0; i < height; ++i) {
-		for (int j = 0; j < width; ++j) {
-			if ((map[i])[j] == '0') {
+	for (int i = 0; i < height; ++i) 
+	{
+		for (int j = 0; j < width; ++j) 
+		{
+			if ((map[i])[j] == '0') 
+			{
 				(map[i])[j] = ' ';
 			}
 		}
 	}
 
-	for (int i = 0; i < height; ++i) {
+	for (int i = 0; i < height; ++i) 
+	{
 		char* line;
 		line = new char[width];
 		strcpy(line, map[i].c_str());
@@ -252,7 +264,8 @@ void show_map(int map_information[4], vector<string> map) {
 
 
 
-void endgame() {
+void endgame() 
+{
 	initscr();
 	clear();
 	refresh();
@@ -261,7 +274,8 @@ void endgame() {
 	mvprintw(LINES - 1, (COLS - strlen("return")), "return");
 	attroff(A_BOLD);
 	refresh();
-	while (1) {
+	while (1) 
+	{
 		char ch;
 		ch = getch();
 		switch (ch)
@@ -277,7 +291,8 @@ void endgame() {
 
 
 
-void showkey1() {
+void showkey1() 
+{
 	initscr();
 	clear();
 	mvprintw(LINES / 2, (COLS - strlen("The above gate is not the hardest one.")) / 2, "The above gate is not the hardest one.");
@@ -298,7 +313,8 @@ void showkey1() {
 }
 
 
-void showkey2() {
+void showkey2() 
+{
 	initscr();
 	clear();
 	mvprintw(LINES / 2, (COLS - strlen("The above gate is the harder than the left one.")) / 2, "The above gate is the harder than left the one.");
@@ -319,7 +335,8 @@ void showkey2() {
 }
 
 
-void showkey3() {
+void showkey3() 
+{
 	initscr();
 	clear();
 	mvprintw(LINES / 2, (COLS - strlen("The below gate is easier than the above one.")) / 2, "The below gate is easier than the above one.");
@@ -342,7 +359,8 @@ void showkey3() {
 
 
 
-void showkey4() {
+void showkey4() 
+{
 	initscr();
 	clear();
 	mvprintw(LINES / 2, (COLS - strlen("The left gate is harder than the below one.")) / 2, "The left gate is harder than the below one.");
@@ -364,7 +382,8 @@ void showkey4() {
 
 
 
-void gate(int x,int y,int width,int height) {
+void gate(int x,int y,int width,int height) 
+{
 	if (x == 0 ) {//上
 		shudu(3);
 	}
@@ -381,7 +400,8 @@ void gate(int x,int y,int width,int height) {
 }
 
 
-void shudu(int level) {
+void shudu(int level) 
+{
 	string shudu_name;
 
 	switch (level)
@@ -389,24 +409,36 @@ void shudu(int level) {
 	case 1:
 
 		shudu_name = "shudu1.txt";
+		clear();
+		refresh();
+		signal(1);
 		show_shudu(shudu_name,level);
 		break;
 
 	case 2:
 
 		shudu_name = "shudu2.txt";
+		clear();
+		refresh();
+		signal(2);
 		show_shudu(shudu_name, level);
 		break;
 
 	case 3:
 
 		shudu_name = "shudu3.txt";
+		clear();
+		refresh();
+		signal(3);
 		show_shudu(shudu_name, level);
 		break;
 
 	case 4:
 
 		shudu_name = "shudu4.txt";
+		clear();
+		refresh();
+		signal(4);
 		show_shudu(shudu_name, level);
 		break;
 
@@ -416,7 +448,8 @@ void shudu(int level) {
 }
 
 
-void show_shudu(string shudu_name,int level) {
+void show_shudu(string shudu_name,int level) 
+{
 
 	initscr();
 	clear();
@@ -427,7 +460,8 @@ void show_shudu(string shudu_name,int level) {
 
 	shudu.resize(19);
 
-	for (int i = 0; i < 19; ++i) {
+	for (int i = 0; i < 19; ++i) 
+	{
 		for (int j = 0; j < 37; ++j)
 		{
 			char a;
@@ -436,14 +470,18 @@ void show_shudu(string shudu_name,int level) {
 		}
 	}
 
-	for (int i = 0; i < 19; ++i) {
-		for (int j = 0; j < 37; ++j) {
-			if ((shudu[i])[j] == '*') {
+	for (int i = 0; i < 19; ++i) 
+	{
+		for (int j = 0; j < 37; ++j) 
+		{
+			if ((shudu[i])[j] == '*') 
+			{
 				(shudu[i])[j] = ' ';
 			}
 		}
 	}
-	for (int i = 0; i < 19; ++i) {
+	for (int i = 0; i < 19; ++i) 
+	{
 		char* line;
 		line = new char[37];
 		
@@ -453,50 +491,56 @@ void show_shudu(string shudu_name,int level) {
 		attroff(A_BOLD);
 	}
 	refresh();
+	if (level==0)
+	{
+		return;
+	}
 	sovle_shudu(shudu_name,shudu,level);
 }
 
 
 
-void sovle_shudu(string shudu_name,vector<string>shudu,int level) {
+void sovle_shudu(string shudu_name,vector<string>shudu,int level) 
+{
 	int x = 1;
 	int y = 2;
 	move(x, y);
 	cbreak();
 	keypad(stdscr, TRUE);
 	curs_set(1);
-	while (1) {
+	while (1) 
+	{
 		int ch = getch();
-
 		switch (ch)
 		{
 		case KEY_UP:
-
-			if (x - 2 > 0) {
+			if (x - 2 > 0)
+			{
 				x = x - 2;
 				y = y;
 			}
 			break;
 
 		case KEY_DOWN:
-
-			if (x + 2 < 18) {
+			if (x + 2 < 18)
+			{
 				x = x + 2;
 				y = y;
 			}
 			break;
 
 		case KEY_LEFT:
+			if (y - 4 > 0)
+			{
 
-			if (y - 4 > 0) {
 				x = x;
 				y = y - 4;
 			}
 			break;
 
 		case KEY_RIGHT:
-
-			if (y + 4 < 36) {
+			if (y + 4 < 36)
+			{
 				x = x;
 				y = y + 4;
 			}
@@ -504,69 +548,63 @@ void sovle_shudu(string shudu_name,vector<string>shudu,int level) {
 
 		case '1':
 			printw("1");
-			
 			shudu[x][y] = '1';
 			break;
 
 		case '2':
 			printw("2");
-			
 			shudu[x][y] = '2';
 			break;
 
 		case '3':
 			printw("3");
-			
 			shudu[x][y] = '3';
 			break;
 
 		case '4':
 			printw("4");
-			
 			shudu[x][y] = '4';
 			break;
 
 		case '5':
 			printw("5");
-		
 			shudu[x][y] = '5';
 			break;
 
 		case '6':
 			printw("6");
-			
 			shudu[x][y] = '6';
 			break;
 
 		case '7':
-
 			printw("7");
-		
 			shudu[x][y] = '7';
 			break;
 
 		case '8':
-
 			printw("8");
-			
 			shudu[x][y] = '8';
 			break;
 
 		case '9':
-
 			printw("9");
 			shudu[x][y] = '9';
 			break;
 
-		case 10:
+		case '0':
+			printw("0");
+			shudu[x][y] = '0';
+			break;
 
-			if (compare(shudu, level)) {
+		case 10:
+			if (compare(shudu, level))
+			{
 				vectory();
 			}
 			else {
 				endgame();
 			}
-
+			break;
 		default:
 			x = x;
 			y = y;
@@ -580,7 +618,8 @@ void sovle_shudu(string shudu_name,vector<string>shudu,int level) {
 }
 
 
-bool compare(vector<string>shudu,int level) {
+bool compare(vector<string>shudu,int level) 
+{
 	string shudu_answer_name;
 	switch (level)
 	{
@@ -602,26 +641,33 @@ bool compare(vector<string>shudu,int level) {
 	ifstream in(shudu_answer_name);
 	int shudu_answer[9][9];
 	int player_answer[9][9];
-	for (int i = 0; i < 9; ++i) {
-		for (int j = 0; j < 9; ++j) {
+	for (int i = 0; i < 9; ++i) 
+	{
+		for (int j = 0; j < 9; ++j) 
+		{
 			in >> shudu_answer[i][j];
 		}
 	}
 
 	clear();
 	refresh();
-	for (int i = 0; i < 9; ++i) {
-		for (int j = 0; j < 9; ++j) {
+	for (int i = 0; i < 9; ++i) 
+	{
+		for (int j = 0; j < 9; ++j) 
+		{
 			cout << shudu_answer[i][j] << " \n"[j == 8];
 		}
-	}
+	} 
 
 	int m = 0;
 
-	for (int i = 1 ; i < 18;  m++) {
-		int n = 0;
-		for (int j = 2 ; j < 36;  ++n) {
-			if (shudu[i][j] == ' ') {
+	for (int i = 1 ; i < 18;  m++) 
+	{
+		int n = 0; 
+		for (int j = 2 ; j < 36;  ++n) 
+		{
+			if (shudu[i][j] == ' ') 
+			{
 				shudu[i][j] = '0';
 			}
 			player_answer[m][n] = shudu[i][j] - '0';
@@ -632,16 +678,21 @@ bool compare(vector<string>shudu,int level) {
 
 	clear();
 	refresh();
-	for (int i = 0; i < 9; ++i) {
-		for (int j = 0; j < 9; ++j) {
+	for (int i = 0; i < 9; ++i) 
+	{
+		for (int j = 0; j < 9; ++j) 
+		{
 			cout << player_answer[i][j] << " \n"[j == 8];
 		}
 	}
 
 	int a = 0;
-	for (int i = 0; i < 9; ++i) {
-		for (int j = 0; j < 9; ++j) {
-			if (!(player_answer[i][j] == shudu_answer[i][j])) {
+	for (int i = 0; i < 9; ++i) 
+	{
+		for (int j = 0; j < 9; ++j) 
+		{
+			if (!(player_answer[i][j] == shudu_answer[i][j])) 
+			{
 				return false;
 			}
 		}
@@ -650,7 +701,8 @@ bool compare(vector<string>shudu,int level) {
 }
 
 
-void vectory() {
+void vectory() 
+{
 	initscr();
 	clear();
 	refresh();
@@ -662,7 +714,8 @@ void vectory() {
 	attroff(A_BOLD);
 	refresh();
 
-	while (1) {
+	while (1) 
+	{
 		char ch;
 		ch = getch();
 		switch (ch)
@@ -674,3 +727,5 @@ void vectory() {
 		}
 	}
 }
+
+

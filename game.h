@@ -3,6 +3,7 @@
 #include <string>
 #include "welcome.h"
 #include "game.h"
+#include "signal.h"
 #include <fstream>
 #include <vector>
 
@@ -33,3 +34,6 @@ void sovle_shudu(string shudu_name,vector< string>,int);
 bool compare(vector<string> shudu, int level);
 
 void vectory();
+
+void get_a_shudu(vector<string>);
+

@@ -1,6 +1,5 @@
 #include "welcome.h"
-#include "curses.h"
-#include "game.h"
+
 
 void welcome()
 {
@@ -18,71 +17,153 @@ void welcome()
 	attron(A_REVERSE);
 	mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
 	attroff(A_REVERSE);
-	mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
+	mvprintw(LINES / 2 + 2, COLS / 2 - strlen("GAME SOLVER") / 2, "%s", "Game Solver");
+	mvprintw(LINES / 2 + 4, COLS / 2 - strlen("About") / 2, "%s", "About");
 	refresh();
-	startbutton_on = true;
+
 
 	int ch;
 	cbreak();
 	noecho();
 	intrflush(stdscr, false);
 	keypad(stdscr, true);
-	bool start_game = false;
-	while (!start_game) {
+	bool start_game = true;
+	bool game_solver = false;
+	bool about_game = false;
+
+	while (1) 
+	{
 
 		ch = getch();
 		switch (ch)
 		{
 		case KEY_UP:
-			if (startbutton_on) {
+			if (start_game) 
+			{
 				attron(A_REVERSE);
-				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
+				mvprintw(LINES / 2 + 4, COLS / 2 - strlen("About") / 2, "%s", "About");
 				attroff(A_REVERSE);
 				attron(A_NORMAL);
-				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
+				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start Game");
+				attroff(A_NORMAL);
+				attron(A_NORMAL);
+				mvprintw(LINES / 2+2, COLS / 2 - strlen("GAME SOLVER") / 2, "%s", "Game Solver");
 				attroff(A_NORMAL);
 				refresh();
-				startbutton_on = false;
+				start_game = false;
+				game_solver = false;
+				about_game = true;
 			}
-			else {
+			else if(game_solver)
+			{
 				attron(A_REVERSE);
-				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
+				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start Game");
 				attroff(A_REVERSE);
 				attron(A_NORMAL);
-				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
+				mvprintw(LINES / 2 + 4, COLS / 2 - strlen("About") / 2, "%s", "About");
+				attroff(A_NORMAL);
+				attron(A_NORMAL);
+				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("GAME SOLVER") / 2, "%s", "Game Solver");
 				attroff(A_NORMAL);
 				refresh();
-				startbutton_on = true;
+				start_game = true;
+				game_solver = false;
+				about_game = false;
+			}
+			else if(about_game)
+			{
+				attron(A_REVERSE);
+				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("GAME SOLVER") / 2, "%s", "Game Solver");
+				attroff(A_REVERSE);
+				attron(A_NORMAL);
+				mvprintw(LINES / 2 + 4, COLS / 2 - strlen("About") / 2, "%s", "About");
+				attroff(A_NORMAL);
+				attron(A_NORMAL);
+				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start Game");
+				attroff(A_NORMAL);
+				refresh();
+				start_game = false;
+				game_solver = true;
+				about_game = false;
 			}
 			break;
 		case KEY_DOWN:
-			if (startbutton_on) {
+			if (start_game) 
+			{
 				attron(A_REVERSE);
-				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
+				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("GAME SOLVER") / 2, "%s", "Game Solver");
 				attroff(A_REVERSE);
 				attron(A_NORMAL);
-				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
+				mvprintw(LINES / 2 + 4, COLS / 2 - strlen("About") / 2, "%s", "About");
+				attroff(A_NORMAL);
+				attron(A_NORMAL);
+				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start Game");
 				attroff(A_NORMAL);
 				refresh();
-				startbutton_on = false;
+				start_game = false;
+				game_solver = true;
+				about_game = false;
 			}
-			else {
+			else if(game_solver)
+			{
 				attron(A_REVERSE);
-				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start game");
+				mvprintw(LINES / 2 + 4, COLS / 2 - strlen("About") / 2, "%s", "About");
 				attroff(A_REVERSE);
 				attron(A_NORMAL);
-				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("About") / 2, "%s", "About");
+				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start Game");
+				attroff(A_NORMAL);
+				attron(A_NORMAL);
+				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("GAME SOLVER") / 2, "%s", "Game Solver");
 				attroff(A_NORMAL);
 				refresh();
-				startbutton_on = true;
+				start_game = false;
+				game_solver = false;
+				about_game = true;
+			}
+			else if (about_game)
+			{
+				attron(A_REVERSE);
+				mvprintw(LINES / 2, COLS / 2 - strlen("START GAME") / 2, "%s", "Start Game");
+				attroff(A_REVERSE);
+				attron(A_NORMAL);
+				mvprintw(LINES / 2 + 4, COLS / 2 - strlen("About") / 2, "%s", "About");
+				attroff(A_NORMAL);
+				attron(A_NORMAL);
+				mvprintw(LINES / 2 + 2, COLS / 2 - strlen("GAME SOLVER") / 2, "%s", "Game Solver");
+				attroff(A_NORMAL);
+				refresh();
+				start_game = true;
+				game_solver = false;
+				about_game = false;
 			}
 			break;
 		case 10:
-			if (startbutton_on) {
-				start_game = true;
+			if (start_game) 
+			{
 				game();
 			}
-			else {
+			else if(game_solver)
+			{
+				
+				int *g[16][16];
+				solve_game();
+				attron(A_REVERSE);
+				mvprintw(20, COLS - strlen("Return"), "%s", "Return");
+				attroff(A_REVERSE);
+				int ch;
+				while (1)
+				{
+					ch = getch();
+					if (ch == 10)
+					{
+						welcome();
+					}
+					else
+						break;
+				}
+			}
+			else if (about_game) 
+			{
 				about();
 			}
 			break;
@@ -92,9 +173,62 @@ void welcome()
 	endwin();
 	return;
 }
+void solve_game() {
+	initscr();
+	clear();
+	refresh();
+	vector< string> shudu;
 
+	shudu.resize(19);
 
-void about() {
+	ifstream in("shudu moban.txt");
+	//ifstream in("shudu1.txt");
+	for (int i = 0; i < 19; ++i)
+	{
+		for (int j = 0; j < 37; ++j)
+		{
+			char a;
+			in >> a;
+			shudu[i] += a;
+		}
+	}
+
+	show_shudu("shudu moban.txt", 0);
+	//show_shudu("shudu1.txt",0);
+
+	add_number(shudu);
+	
+	for (int i = 0; i < 19; ++i)
+	{
+		for (int j = 0; j < 37; ++j)
+		{
+			if ((shudu[i])[j] == '*')
+			{
+				(shudu[i])[j] = ' ';
+			}
+		}
+	}
+
+	char *line;
+	line = new char[37];
+	for (int i = 0; i < 19; ++i) {
+		attron(A_REVERSE);
+		strcpy(line, shudu[i].c_str());
+		attroff(A_REVERSE);
+	}
+	
+	clear();
+	for (int i = 0; i < 19; ++i) {
+		char* line;
+		line = new char[37];
+		strcpy(line, shudu[i].c_str());
+		mvprintw(0 + i, 0, line);
+	}
+	refresh();
+}
+
+void about() 
+{
 	initscr();
 	clear();
 	char* ABOUT;
@@ -120,176 +254,171 @@ void about() {
 	
 	bool return_on = true;
 
-	attron(A_BOLD);
+	attron(A_REVERSE);
 	mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
-	attroff(A_BOLD);
-	mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
+	attroff(A_REVERSE);
 
 
-	while (1) {
+	while (1) 
+	{
 		ch = getch();
+		
+		if (ch == 10) {
+			if (return_on)
+			{
+				welcome();
+			}
+		}
+	}
+}
+
+void add_number(vector<string>&shudu)
+{
+	int question[9][9];
+	int x = 1;
+	int y = 2;
+	move(x, y);
+	cbreak();
+	keypad(stdscr, TRUE);
+	curs_set(1);
+	while (1)
+	{
+		int ch = getch();
 		switch (ch)
 		{
 		case KEY_UP:
-			if (return_on) {
-				attron(A_BOLD);
-				mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
-				attroff(A_BOLD);
-				mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
-				refresh();
-				return_on = false;
-			}
-			else {
-				
-				mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
-				attron(A_BOLD);
-				mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
-				attroff(A_BOLD);
-				refresh();
-				return_on = true;
+			if (x - 2 > 0)
+			{
+				x = x - 2;
+				y = y;
 			}
 			break;
+
 		case KEY_DOWN:
-			if (return_on) {
-				attron(A_BOLD);
-				mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
-				attroff(A_BOLD);
-				mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
-				refresh();
-				return_on = false;
-			}
-			else {
-
-				mvprintw(LINES - 1, COLS - strlen("GAME SOVLER"), "GAME SOVER");
-				attron(A_BOLD);
-				mvprintw(LINES - 2, COLS - strlen("RETURN") - 5, "RETURN");
-				attroff(A_BOLD);
-				refresh();
-				return_on = true;
+			if (x + 2 < 18)
+			{
+				x = x + 2;
+				y = y;
 			}
 			break;
-		case 10:
-			if (return_on) {
-				welcome();
-			}
-			else {
-				clear();
 
-				refresh();
-				mykeyprogram();
-				while (1)
+		case KEY_LEFT:
+			if (y - 4 > 0)
+			{
+				x = x;
+				y = y - 4;
+			}
+			break;
+
+		case KEY_RIGHT:
+			if (y + 4 < 36)
+			{
+				x = x;
+				y = y + 4;
+			}
+			break;
+
+		case '0':
+			printw("0");
+			shudu[x][y] = '0';
+			break;
+
+		case '1':
+			printw("1");
+			shudu[x][y] = '1';
+			break;
+
+		case '2':
+			printw("2");
+			shudu[x][y] = '2';
+			break;
+
+		case '3':
+			printw("3");
+
+			shudu[x][y] = '3';
+			break;
+
+		case '4':
+			printw("4");
+			shudu[x][y] = '4';
+			break;
+
+		case '5':
+			printw("5");
+			shudu[x][y] = '5';
+			break;
+
+		case '6':
+			printw("6");
+			shudu[x][y] = '6';
+			break;
+
+		case '7':
+			printw("7");
+			shudu[x][y] = '7';
+			break;
+
+		case '8':
+			printw("8");
+			shudu[x][y] = '8';
+			break;
+
+		case '9':
+			printw("9");
+			shudu[x][y] = '9';
+			break;
+
+		case 10:
+		{
+		for (int i = 0; i < 9; ++i) {
+			for (int j = 0; j < 9; ++j) {
+				int a;
+				a = int(shudu[2 * i + 1][4 * j + 2] - '0');
+				if (0 <= a && a < 10) {
+					question[i][j] = a;
+				}
+				else
 				{
-					ch = getch();
-					if (ch == 10) {
-						welcome();
-					}
+					question[i][j] = 0;
 				}
 			}
-			break;
-		default:
-			break;
 		}
-		
+// 		int a[9][9];
+// 		for (int i = 0; i < 9; ++i) {
+// 			for (int j = 0; j < 9; ++j) {
+// 				a[i][j] = question[i][j];
+// 			}
+// 		}
+		my_main(question);
 
-	}
-
-}
-
- int g[16][16];
-void mykeyprogram() {
-	initscr();
-	clear();
-	mvprintw(5, COLS / 2 - strlen("This is a program which can solve Sudoku.Please enter your Sudoku below."), "This is a progam which can solve Sudoku.Please enter your Sudoku below.");
-	mvprintw(6, COLS / 2 - strlen("0 take the place of space"), "0 take the place of space");
-	mvprintw(20, COLS / 2 - strlen("enter your Sudoku below"), "enter your Sudoku below");
-	refresh();
-
-	endwin();
-
-	cout << "please enter the Sudoku" << endl;
-	for (int i = 1; i <= 9; ++i)
-		for (int j = 1; j <= 9; ++j)
-			std::cin >> g[i][j];
-
-	std::cout << std::endl;
-	if (Solve())
-		for (int i = 1; i <= 9; ++i)
-			for (int j = 1; j <= 9; ++j)
-				std::cout << g[i][j] << " \n"[j == 9];
-	return ;
-}
-
-
-
-inline void GetABlank(int &x, int &y)
-{
-	x = y = -1;
-	for (int i = 1; i <= 9; ++i)
-		for (int j = 1; j <= 9; ++j)
-			if (g[i][j] == 0)
-			{
-				x = i, y = j;
-				break;
-			}
-}
-
-
-inline bool CheckRow(int x, int value)
-{
-	for (int i = 1; i <= 9; ++i)
-		if (g[x][i] == value)
-			return false;
-	return true;
-}
-
-
-inline bool CheckCol(int y, int value)
-{
-	for (int i = 1; i <= 9; ++i)
-		if (g[i][y] == value)
-			return false;
-	return true;
-}
-
-
-inline bool CheckSmall(int x, int y, int value)
-{
-	int xs = (x - 1) / 3 * 3 + 1;
-	int xt = ((x - 1) / 3 + 1) * 3;
-	int ys = (y - 1) / 3 * 3 + 1;
-	int yt = ((y - 1) / 3 + 1) * 3;
-	for (int i = xs; i <= xt; ++i)
-		for (int j = ys; j <= yt; ++j)
-			if (g[i][j] == value)
-				return false;
-	return true;
-}
-
-
-inline bool CheckAll(int x, int y, int value)
-{
-	return CheckRow(x, value)
-		&& CheckCol(y, value)
-		&& CheckSmall(x, y, value);
-}
-
-
-bool Solve(void)
-{
-	int i, j;
-	GetABlank(i, j);
-	if (i == -1 && j == -1)
-		return true;
-	for (int k = 1; k <= 9; ++k)
-	{
-		if (CheckAll(i, j, k))
+		for (int i = 0; i < 9; ++i)
 		{
-			g[i][j] = k;
-			if (!Solve())
-				g[i][j] = 0;
-			else
-				return true;
+			for (int j = 0; j < 9; ++j)
+			{
+				int m;
+				m = question[i][j];
+			}
 		}
+
+		for (int i = 0; i < 9; ++i)
+		{
+			for (int j = 0; j < 9; ++j)
+			{
+				char a = question[i][j]+48;
+				shudu[2 * i + 1][4 * j + 2] = a;
+			}
+		}
+		char *line;
+		line = new char[37];
+		for (int i = 0; i < 19; ++i) {
+			strcpy(line, shudu[i].c_str());
+		}
+		return;
+		break; 
+		}
+		}
+		move(x, y);
+		refresh();
 	}
-	return false;
 }

@@ -2,25 +2,22 @@
 #include "curses.h"
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <vector>
+#include "signal.h"
+#include "welcome.h"
+#include "curses.h"
+#include "game.h"
+#include "solve.h"
 
 using namespace std;
 
 void welcome();
 
+void solve_game();
+
 void about();
 
-void mykeyprogram();
-
-void GetABlank(int & x, int & y);
-
-bool CheckRow(int x, int value);
-
-bool CheckCol(int y, int value);
-
-bool CheckSmall(int x, int y, int value);
-
-bool CheckAll(int x, int y, int value);
-
-bool Solve(void);
-
 void game();
+
+void add_number(vector<string>&shudu);
